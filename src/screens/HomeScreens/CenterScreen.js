@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Dimensions, Image, Pressable, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Swiper from "react-native-swiper";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -7,9 +14,9 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CenterScreen = ({ route, navigation }) => {
   const [images, setImages] = useState([]);
-  const iconsColor = "rgb(11 78 69)";
+  const iconsColor = "rgb(10 114 100)";
   const iconsSize = 20;
-  const { title, image } = route.params;
+  const { title, image, logo, distance } = route.params;
   return (
     <View style={styles.container}>
       <View style={styles.imagesWrapper}>
@@ -32,6 +39,12 @@ const CenterScreen = ({ route, navigation }) => {
         <View style={styles.titleWrapper}></View>
       </View>
       <View style={styles.dataWrapper}>
+        <View style={styles.headerWrapper}>
+          <Image style={styles.logo} source={{ uri: logo }}></Image>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.distance}>{distance} km</Text>
+        </View>
+
         <View style={styles.iconsWrapper}>
           <Pressable style={styles.icon}>
             <Ionicons
@@ -93,10 +106,11 @@ const styles = StyleSheet.create({
   },
   iconsWrapper: {
     width: Dimensions.get("screen").width * 0.8,
-    padding: 10,
-    height: 100,
+    paddingHorizontal: 10,
+    height: 80,
     flexDirection: "row",
     alignItems: "center",
+
     justifyContent: "space-between",
   },
   titleWrapper: {
@@ -108,14 +122,35 @@ const styles = StyleSheet.create({
     width: "100%",
     bottom: 0,
   },
+  headerWrapper: {
+    width: "90%",
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "start",
+  },
+  title: {
+    fontSize: 24,
+    paddingStart: 10,
+    fontWeight: "bold",
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  distance: {
+    end: 0,
+    position: "absolute",
+    fontSize: 18,
+  },
   icon: {
     width: 35,
     height: 35,
     borderRadius: 8,
-    borderColor: "logosColor",
+    borderColor: "rgb(10 114 100)",
     borderWidth: 1,
     alignItems: "center",
-    color: "rgb(11 78 69)",
     justifyContent: "center",
     alignSelf: "center",
   },

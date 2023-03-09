@@ -17,6 +17,8 @@ const Center = (props) => {
         navigation.navigate("Center", {
           title: props.title,
           image: props.image,
+          logo: props.logo,
+          distance: props.distance,
         });
       }}
     >
