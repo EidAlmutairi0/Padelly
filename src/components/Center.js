@@ -1,13 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Dimensions, Image, Pressable, StyleSheet, View } from "react-native";
+import CostumeText from "./CostumeText";
 const Center = (props) => {
   const navigation = useNavigation();
   return (
@@ -30,15 +24,23 @@ const Center = (props) => {
         resizeMode="cover"
       ></Image>
       <View style={styles.data}>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: props.logo,
-          }}
-        ></Image>
+        <View style={styles.logoWrapper}>
+          <Image
+            style={styles.logo}
+            source={{
+              uri: props.logo,
+            }}
+          ></Image>
+        </View>
 
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.distance}>{props.distance} km</Text>
+        <View style={styles.titleWrapper}>
+          <CostumeText style={styles.title} fontWeight="Bold">
+            {props.title}
+          </CostumeText>
+        </View>
+        <View style={styles.distanceWrapper}>
+          <CostumeText style={styles.distance}>{props.distance} km</CostumeText>
+        </View>
       </View>
     </Pressable>
   );
@@ -69,6 +71,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: "absolute",
     alignItems: "center",
+
+    alignContent: "space-between",
     padding: 12,
     borderRadius: 14,
     flexDirection: "row",
@@ -82,13 +86,26 @@ const styles = StyleSheet.create({
   title: {
     paddingStart: 10,
     fontSize: 22,
+
     color: "white",
     fontWeight: "bold",
+  },
+  titleWrapper: {
+    width: "70%",
+    flex: 1,
+  },
+  logoWrapper: {
+    width: "15%",
+  },
+  distanceWrapper: {
+    width: "30%",
+    end: 10,
+
+    position: "absolute",
   },
   distance: {
     fontSize: 16,
     color: "white",
-    position: "absolute",
-    end: 10,
+    alignSelf: "flex-end",
   },
 });

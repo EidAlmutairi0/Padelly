@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Animated,
@@ -9,27 +10,32 @@ import {
   View,
 } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-const CenterScreen = ({ route, navigation }) => {
+import CostumeText from "../../components/CostumeText";
+import HourCard from "../../components/HourCard";
+const CenterScreen = ({ route }) => {
   const iconsColor = "rgb(10 114 100)";
   const iconsSize = 20;
   const { title, image, logo, distance } = route.params;
-
+  const [isSwiper, setIsSwiper] = useState(true);
   const [screenSize, setScreenSize] = useState(
     new Animated.Value(Dimensions.get("screen").height * 0.53)
   );
+  const navigation = useNavigation();
 
   const MIN_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.53;
-  const MAX_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.8;
+  const MAX_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.75;
 
   const handleSwipeDown = () => {
     Animated.spring(screenSize, {
       toValue: MIN_CONTENT_HEIGHT,
       useNativeDriver: false,
     }).start();
+    setIsSwiper(true);
   };
 
   const handleSwipeUp = () => {
@@ -37,6 +43,7 @@ const CenterScreen = ({ route, navigation }) => {
       toValue: MAX_CONTENT_HEIGHT,
       useNativeDriver: false,
     }).start();
+    setIsSwiper(false);
   };
 
   return (
@@ -48,11 +55,22 @@ const CenterScreen = ({ route, navigation }) => {
           position: "absolute",
         }}
       >
-        <Swiper>
+        <Swiper scrollEnabled={isSwiper}>
           <Image style={styles.image} source={{ uri: image }}></Image>
           <Image style={styles.image} source={{ uri: image }}></Image>
         </Swiper>
       </View>
+      <SafeAreaView>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={styles.backButton}
+        >
+          <Ionicons name="arrow-back" size={30} color="white"></Ionicons>
+        </Pressable>
+      </SafeAreaView>
+
       <Animated.View
         onTouchStart={(e) => (this.touchY = e.nativeEvent.pageY)}
         onTouchEnd={(e) => {
@@ -77,7 +95,11 @@ const CenterScreen = ({ route, navigation }) => {
         <View style={[styles.dataWrapper]}>
           <View style={styles.headerWrapper}>
             <Image style={styles.logo} source={{ uri: logo }}></Image>
-            <Text style={styles.title}>{title}</Text>
+            <View style={styles.titleWrapper}>
+              <CostumeText style={styles.title} fontWeight="Bold">
+                {title}
+              </CostumeText>
+            </View>
             <Text style={styles.distance}>{distance} km</Text>
           </View>
           <View style={styles.divider} />
@@ -114,6 +136,24 @@ const CenterScreen = ({ route, navigation }) => {
               ></Feather>
             </Pressable>
           </View>
+          <View style={styles.reservationWrapper}>
+            <View style={styles.dates}>
+              <Feather
+                name="calendar"
+                size={26}
+                color="rgb(1 160 139)"
+              ></Feather>
+              <CostumeText
+                style={{
+                  fontSize: 18,
+                  paddingHorizontal: 10,
+                }}
+              >
+                Date
+              </CostumeText>
+              <HourCard></HourCard>
+            </View>
+          </View>
         </View>
       </Animated.View>
     </View>
@@ -133,9 +173,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 16,
   },
+  backButton: {
+    width: 50,
+    height: 50,
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    backgroundColor: "rgb(1 160 139)",
+    top: 50,
+    start: 10,
+  },
+  dates: {
+    width: Dimensions.get("screen").width,
+
+    flexDirection: "row",
+    alignItems: "center",
+  },
   image: {
     height: Dimensions.get("screen").height * 0.4,
     width: Dimensions.get("screen").width,
+  },
+  reservationWrapper: {
+    width: Dimensions.get("screen").width,
+    padding: 30,
   },
   iconsWrapper: {
     width: Dimensions.get("screen").width * 0.8,
@@ -146,13 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   titleWrapper: {
-    height: 20,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-    position: "absolute",
-    backgroundColor: "white",
-    width: "100%",
-    bottom: 0,
+    width: "70%",
   },
   headerWrapper: {
     width: Dimensions.get("screen").width,
@@ -161,19 +216,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 10,
-    alignContent: "space-around",
+    alignContent: "space-between",
     backgroundColor: "white",
     justifyContent: "start",
   },
   title: {
     fontSize: 24,
     paddingStart: 10,
-    width: "70%",
+    width: "100%",
     fontWeight: "bold",
   },
   logo: {
     width: 50,
     height: 50,
+
     borderRadius: 50,
   },
   distance: {
