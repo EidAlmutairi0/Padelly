@@ -16,7 +16,7 @@ import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import CostumeText from "../../components/CostumeText";
-import HourCard from "../../components/HourCard";
+import Hours from "../../components/Hours";
 const CenterScreen = ({ route }) => {
   const iconsColor = "rgb(10 114 100)";
   const iconsSize = 20;
@@ -151,7 +151,7 @@ const CenterScreen = ({ route }) => {
               >
                 Date
               </CostumeText>
-              <HourCard></HourCard>
+              <Hours />
             </View>
           </View>
         </View>

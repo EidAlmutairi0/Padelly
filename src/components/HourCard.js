@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import CostumeText from "./CostumeText";
 
-const HourCard = () => {
+const HourCard = (props) => {
   const [isSelected, setIsSelected] = useState(false);
   return (
     <Pressable
       onPress={() => {
-        setIsSelected(true);
+        setIsSelected(!isSelected);
       }}
       style={[styles.container, isSelected && styles.selected]}
     >
-      <CostumeText style={isSelected && styles.selected}>5:30</CostumeText>
-      <CostumeText style={isSelected && styles.selected}>PM</CostumeText>
+      <CostumeText style={isSelected && styles.selected}>
+        {props.hour}
+      </CostumeText>
+      <CostumeText style={isSelected && styles.selected}>
+        {props.noon}
+      </CostumeText>
     </Pressable>
   );
 };
