@@ -9,12 +9,27 @@ const HourCard = (props) => {
       onPress={() => {
         setIsSelected(!isSelected);
       }}
-      style={[styles.container, isSelected && styles.selected]}
+      style={[
+        styles.container,
+        isSelected && styles.selected,
+        props.disabled && styles.disabled,
+      ]}
+      disabled={props.disabled}
     >
-      <CostumeText style={isSelected && styles.selected}>
+      <CostumeText
+        style={[
+          isSelected && styles.selected,
+          props.disabled && styles.disabled,
+        ]}
+      >
         {props.hour}
       </CostumeText>
-      <CostumeText style={isSelected && styles.selected}>
+      <CostumeText
+        style={[
+          isSelected && styles.selected,
+          props.disabled && styles.disabled,
+        ]}
+      >
         {props.noon}
       </CostumeText>
     </Pressable>
@@ -31,6 +46,7 @@ const styles = StyleSheet.create({
     borderColor: "rgb(1 160 139)",
     borderWidth: 1,
     flexDirection: "column",
+
     alignContent: "space-around",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -38,5 +54,10 @@ const styles = StyleSheet.create({
   selected: {
     backgroundColor: "rgb(1 160 139)",
     color: "white",
+  },
+  disabled: {
+    borderColor: "rgb(175 175 175)",
+    backgroundColor: "white",
+    color: "rgb(175 175 175)",
   },
 });

@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { FlatGrid } from "react-native-super-grid";
 import HourCard from "./HourCard";
 const Hours = () => {
   var today = new Date();
@@ -17,15 +18,38 @@ const Hours = () => {
   const currentTime = new Date();
   var newHour = myToday;
   let hours = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 24; i++) {
     newHour = moment(newHour).add(30, "m");
+    var disabled = false;
+    if (moment(newHour).isBefore(currentTime)) disabled = true;
     var newTime = moment(newHour, ["HH:mm"]).format("h:mm A");
     var hour = newTime.split(" ")[0];
     var noon = newTime.split(" ")[1];
-    console.log(hour);
-    hours.push(<HourCard hour={hour} noon={noon}></HourCard>);
+
+    hours.push({
+      hour: hour,
+      noon: noon,
+      disabled: disabled,
+    });
   }
-  return <View>{hours}</View>;
+  return (
+    <FlatGrid
+      itemDimension={50}
+      spacing={8}
+      scrollEnabled={false}
+      renderItem={(item) => {
+        return (
+          <HourCard
+            key={item.index}
+            hour={item.item.hour}
+            noon={item.item.noon}
+            disabled={item.item.disabled}
+          ></HourCard>
+        );
+      }}
+      data={hours}
+    ></FlatGrid>
+  );
 };
 
 export default Hours;

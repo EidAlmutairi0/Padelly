@@ -9,14 +9,17 @@ import {
   Text,
   View,
 } from "react-native";
+import Hours from "../../components/Hours";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import CostumeText from "../../components/CostumeText";
-import Hours from "../../components/Hours";
+import Days from "../../components/Days";
+import Durations from "../../components/Durations";
 const CenterScreen = ({ route }) => {
   const iconsColor = "rgb(10 114 100)";
   const iconsSize = 20;
@@ -138,19 +141,53 @@ const CenterScreen = ({ route }) => {
           </View>
           <View style={styles.reservationWrapper}>
             <View style={styles.dates}>
-              <Feather
-                name="calendar"
-                size={26}
-                color="rgb(1 160 139)"
-              ></Feather>
-              <CostumeText
-                style={{
-                  fontSize: 18,
-                  paddingHorizontal: 10,
-                }}
-              >
-                Date
-              </CostumeText>
+              <View style={styles.datesHeader}>
+                <Feather
+                  name="calendar"
+                  size={26}
+                  color="rgb(1 160 139)"
+                ></Feather>
+                <CostumeText
+                  style={{
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Date
+                </CostumeText>
+              </View>
+              <Days />
+            </View>
+            <View style={styles.dates}>
+              <View style={styles.datesHeader}>
+                <Icon name="timer-sand" size={26} color="rgb(1 160 139)"></Icon>
+                <CostumeText
+                  style={{
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Duration
+                </CostumeText>
+              </View>
+              <Durations />
+            </View>
+            <View style={styles.dates}>
+              <View style={styles.datesHeader}>
+                <Feather
+                  name="clock"
+                  size={26}
+                  color="rgb(1 160 139)"
+                ></Feather>
+                <CostumeText
+                  style={{
+                    fontSize: 18,
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Time
+                </CostumeText>
+              </View>
               <Hours />
             </View>
           </View>
@@ -185,8 +222,9 @@ const styles = StyleSheet.create({
     start: 10,
   },
   dates: {
-    width: Dimensions.get("screen").width,
-
+    marginVertical: 4,
+  },
+  datesHeader: {
     flexDirection: "row",
     alignItems: "center",
   },
