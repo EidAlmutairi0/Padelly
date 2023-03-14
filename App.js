@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeStack from "./src/screens/HomeScreens/HomeStack";
 import MapStack from "./src/screens/MapScreens/MapStack";
@@ -31,26 +31,76 @@ const Main = () => {
       initialRouteName="HomeTab"
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: "rgb(1, 160, 139)",
+          backgroundColor: "white",
+          height: 80,
         },
         headerShown: false,
-        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
         name="ProfileTab"
         component={ProfileStack}
         options={{
+          tabBarLabel: ({ focused, color, size }) => {
+            let icon;
+            if (focused) {
+              icon = "person-outline";
+              size = 22;
+              return (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "bold",
+                    marginTop: 6,
+                  }}
+                >
+                  Profile
+                </Text>
+              );
+            } else {
+              return (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    marginTop: 6,
+
+                    color: "rgb(141 152 170)",
+                  }}
+                >
+                  Profile
+                </Text>
+              );
+            }
+          },
+
           tabBarIcon: ({ focused, color, size }) => {
             let icon;
             if (focused) {
-              icon = "person";
-              size = 28;
+              isFocused = "Profile";
+              icon = "person-outline";
+              size = 22;
+              return (
+                <View
+                  style={{
+                    width: 48,
+                    height: 48,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "rgb(1 160 138)",
+                    borderRadius: 12,
+                    marginBottom: 15,
+                  }}
+                >
+                  <Ionicons name={icon} size={size} color="white" />
+                </View>
+              );
             } else {
               icon = "person-outline";
               size = 22;
+              return (
+                <Ionicons name={icon} size={size} color="rgb(141 152 170)" />
+              );
             }
-            return <Ionicons name={icon} size={size} color="white" />;
           },
         }}
       />
@@ -58,16 +108,65 @@ const Main = () => {
         name="HomeTab"
         component={HomeStack}
         options={{
+          tabBarLabel: ({ focused, color, size }) => {
+            let icon;
+            if (focused) {
+              icon = "person-outline";
+              size = 22;
+              return (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "bold",
+                    marginTop: 6,
+                  }}
+                >
+                  Profile
+                </Text>
+              );
+            } else {
+              return (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    marginTop: 6,
+
+                    color: "rgb(141 152 170)",
+                  }}
+                >
+                  Profile
+                </Text>
+              );
+            }
+          },
+
           tabBarIcon: ({ focused, color, size }) => {
             let icon;
             if (focused) {
-              icon = "home";
-              size = 28;
+              icon = "home-outline";
+              size = 22;
+              return (
+                <View
+                  style={{
+                    width: 48,
+                    height: 48,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "rgb(1 160 138)",
+                    borderRadius: 12,
+                    marginBottom: 15,
+                  }}
+                >
+                  <Ionicons name={icon} size={size} color="white" />
+                </View>
+              );
             } else {
               icon = "home-outline";
               size = 22;
+              return (
+                <Ionicons name={icon} size={size} color="rgb(141 152 170)" />
+              );
             }
-            return <Ionicons name={icon} size={size} color="white" />;
           },
         }}
       />
@@ -75,16 +174,65 @@ const Main = () => {
         name="MapTab"
         component={MapStack}
         options={{
+          tabBarLabel: ({ focused, color, size }) => {
+            let icon;
+            if (focused) {
+              icon = "person-outline";
+              size = 22;
+              return (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "bold",
+                    marginTop: 6,
+                  }}
+                >
+                  Profile
+                </Text>
+              );
+            } else {
+              return (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    marginTop: 6,
+
+                    color: "rgb(141 152 170)",
+                  }}
+                >
+                  Profile
+                </Text>
+              );
+            }
+          },
+
           tabBarIcon: ({ focused, color, size }) => {
             let icon;
             if (focused) {
-              icon = "map";
-              size = 28;
+              icon = "map-outline";
+              size = 22;
+              return (
+                <View
+                  style={{
+                    width: 48,
+                    height: 48,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "rgb(1 160 138)",
+                    borderRadius: 12,
+                    marginBottom: 15,
+                  }}
+                >
+                  <Ionicons name={icon} size={size} color="white" />
+                </View>
+              );
             } else {
               icon = "map-outline";
               size = 22;
+              return (
+                <Ionicons name={icon} size={size} color="rgb(141 152 170)" />
+              );
             }
-            return <Ionicons name={icon} size={size} color="white" />;
           },
         }}
       />

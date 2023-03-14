@@ -5,6 +5,7 @@ import {
   Dimensions,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -32,6 +33,7 @@ const CenterScreen = ({ route }) => {
 
   const MIN_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.53;
   const MAX_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.75;
+  const [scrollEnabled, setScrollEnabled] = useState(false);
 
   const handleSwipeDown = () => {
     Animated.spring(screenSize, {
@@ -47,6 +49,7 @@ const CenterScreen = ({ route }) => {
       useNativeDriver: false,
     }).start();
     setIsSwiper(false);
+    setScrollEnabled(true);
   };
 
   return (
@@ -75,11 +78,12 @@ const CenterScreen = ({ route }) => {
       </SafeAreaView>
 
       <Animated.View
+        scrollEnabled={scrollEnabled}
         onTouchStart={(e) => (this.touchY = e.nativeEvent.pageY)}
         onTouchEnd={(e) => {
-          if (this.touchY - e.nativeEvent.pageY > 100) {
+          if (this.touchY - e.nativeEvent.pageY > 50) {
             handleSwipeUp();
-          } else if (e.nativeEvent.pageY - this.touchY > 100) {
+          } else if (e.nativeEvent.pageY - this.touchY > 200) {
             handleSwipeDown();
           }
         }}
@@ -95,103 +99,129 @@ const CenterScreen = ({ route }) => {
           {},
         ]}
       >
-        <View style={[styles.dataWrapper]}>
-          <View style={styles.headerWrapper}>
-            <Image style={styles.logo} source={{ uri: logo }}></Image>
-            <View style={styles.titleWrapper}>
-              <CostumeText style={styles.title} fontWeight="Bold">
-                {title}
-              </CostumeText>
+        <ScrollView>
+          <View style={[styles.dataWrapper]}>
+            <View
+              onTouchStart={(e) => (this.touchY = e.nativeEvent.pageY)}
+              onTouchEnd={(e) => {
+                if (this.touchY - e.nativeEvent.pageY > 1) {
+                  handleSwipeUp();
+                } else if (e.nativeEvent.pageY - this.touchY > 1) {
+                }
+              }}
+              style={{
+                width: 50,
+                height: 8,
+                backgroundColor: "rgb(194 194 194)",
+                borderRadius: 12,
+                marginTop: 5,
+              }}
+            ></View>
+            <View style={styles.headerWrapper}>
+              <Image style={styles.logo} source={{ uri: logo }}></Image>
+              <View style={styles.titleWrapper}>
+                <CostumeText style={styles.title} fontWeight="Bold">
+                  {title}
+                </CostumeText>
+              </View>
+              <Text style={styles.distance}>{distance} km</Text>
             </View>
-            <Text style={styles.distance}>{distance} km</Text>
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.iconsWrapper}>
-            <Pressable style={styles.icon}>
-              <Ionicons
-                color={iconsColor}
-                size={iconsSize}
-                name="logo-instagram"
-              ></Ionicons>
-            </Pressable>
-            <Pressable style={styles.icon}>
-              <Icon color={iconsColor} size={iconsSize} name="snapchat"></Icon>
-            </Pressable>
-            <Pressable style={styles.icon}>
-              <Ionicons
-                color={iconsColor}
-                size={iconsSize}
-                name="logo-whatsapp"
-              ></Ionicons>
-            </Pressable>
-            <Pressable style={styles.icon}>
-              <Feather
-                color={iconsColor}
-                size={iconsSize}
-                name="phone"
-              ></Feather>
-            </Pressable>
-            <Pressable style={styles.icon}>
-              <Feather
-                color={iconsColor}
-                size={iconsSize}
-                name="map-pin"
-              ></Feather>
-            </Pressable>
-          </View>
-          <View style={styles.reservationWrapper}>
-            <View style={styles.dates}>
-              <View style={styles.datesHeader}>
+            <View style={styles.divider} />
+            <View style={styles.iconsWrapper}>
+              <Pressable style={styles.icon}>
+                <Ionicons
+                  color={iconsColor}
+                  size={iconsSize}
+                  name="logo-instagram"
+                ></Ionicons>
+              </Pressable>
+              <Pressable style={styles.icon}>
+                <Icon
+                  color={iconsColor}
+                  size={iconsSize}
+                  name="snapchat"
+                ></Icon>
+              </Pressable>
+              <Pressable style={styles.icon}>
+                <Ionicons
+                  color={iconsColor}
+                  size={iconsSize}
+                  name="logo-whatsapp"
+                ></Ionicons>
+              </Pressable>
+              <Pressable style={styles.icon}>
                 <Feather
-                  name="calendar"
-                  size={26}
-                  color="rgb(1 160 139)"
+                  color={iconsColor}
+                  size={iconsSize}
+                  name="phone"
                 ></Feather>
-                <CostumeText
-                  style={{
-                    fontSize: 18,
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Date
-                </CostumeText>
-              </View>
-              <Days />
-            </View>
-            <View style={styles.dates}>
-              <View style={styles.datesHeader}>
-                <Icon name="timer-sand" size={26} color="rgb(1 160 139)"></Icon>
-                <CostumeText
-                  style={{
-                    fontSize: 18,
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Duration
-                </CostumeText>
-              </View>
-              <Durations />
-            </View>
-            <View style={styles.dates}>
-              <View style={styles.datesHeader}>
+              </Pressable>
+              <Pressable style={styles.icon}>
                 <Feather
-                  name="clock"
-                  size={26}
-                  color="rgb(1 160 139)"
+                  color={iconsColor}
+                  size={iconsSize}
+                  name="map-pin"
                 ></Feather>
-                <CostumeText
-                  style={{
-                    fontSize: 18,
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Time
-                </CostumeText>
+              </Pressable>
+            </View>
+            <View style={styles.reservationWrapper}>
+              <View style={styles.dates}>
+                <View style={styles.datesHeader}>
+                  <Feather
+                    name="calendar"
+                    size={26}
+                    color="rgb(1 160 139)"
+                  ></Feather>
+                  <CostumeText
+                    style={{
+                      fontSize: 18,
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Date
+                  </CostumeText>
+                </View>
+                <Days />
               </View>
-              <Hours />
+              <View style={styles.dates}>
+                <View style={styles.datesHeader}>
+                  <Icon
+                    name="timer-sand"
+                    size={26}
+                    color="rgb(1 160 139)"
+                  ></Icon>
+                  <CostumeText
+                    style={{
+                      fontSize: 18,
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Duration
+                  </CostumeText>
+                </View>
+                <Durations />
+              </View>
+              <View style={styles.dates}>
+                <View style={styles.datesHeader}>
+                  <Feather
+                    name="clock"
+                    size={26}
+                    color="rgb(1 160 139)"
+                  ></Feather>
+                  <CostumeText
+                    style={{
+                      fontSize: 18,
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Time
+                  </CostumeText>
+                </View>
+                <Hours />
+              </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </Animated.View>
     </View>
   );
@@ -234,11 +264,11 @@ const styles = StyleSheet.create({
   },
   reservationWrapper: {
     width: Dimensions.get("screen").width,
-    padding: 30,
+    padding: 20,
   },
   iconsWrapper: {
     width: Dimensions.get("screen").width * 0.8,
-    paddingHorizontal: 10,
+    padding: 10,
     flexDirection: "row",
     alignItems: "center",
 

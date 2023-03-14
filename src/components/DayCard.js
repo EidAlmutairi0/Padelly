@@ -1,14 +1,24 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Pressable, StyleSheet } from "react-native";
 import CostumeText from "./CostumeText";
 
 const DayCard = (props) => {
+  const [selected, setSelected] = useState(false);
   return (
-    <View style={styles.container}>
-      <CostumeText>{props.month}</CostumeText>
-      <CostumeText>{props.dayNum}</CostumeText>
-      <CostumeText>{props.day}</CostumeText>
-    </View>
+    <Pressable
+      onPress={() => {
+        setSelected(!selected);
+      }}
+      style={[styles.container, selected && styles.selected]}
+    >
+      <CostumeText style={selected && styles.selected}>
+        {props.month}
+      </CostumeText>
+      <CostumeText style={selected && styles.selected}>
+        {props.dayNum}
+      </CostumeText>
+      <CostumeText style={selected && styles.selected}>{props.day}</CostumeText>
+    </Pressable>
   );
 };
 
