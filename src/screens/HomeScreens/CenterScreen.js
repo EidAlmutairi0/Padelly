@@ -21,6 +21,9 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import CostumeText from "../../components/CostumeText";
 import Days from "../../components/Days";
 import Durations from "../../components/Durations";
+import SocialMediaIcon from "../../components/SocialMediaIcon";
+import useTheme from "../../Themes/useTheme";
+import useThemedStyles from "../../Themes/useThemedStyles";
 const CenterScreen = ({ route }) => {
   const iconsColor = "rgb(10 114 100)";
   const iconsSize = 20;
@@ -52,8 +55,11 @@ const CenterScreen = ({ route }) => {
     setScrollEnabled(true);
   };
 
+  const theme = useTheme();
+  const style = useThemedStyles(styles);
+
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
       <View
         style={{
           height: Dimensions.get("screen").height * 0.4,
@@ -62,8 +68,8 @@ const CenterScreen = ({ route }) => {
         }}
       >
         <Swiper scrollEnabled={isSwiper}>
-          <Image style={styles.image} source={{ uri: image }}></Image>
-          <Image style={styles.image} source={{ uri: image }}></Image>
+          <Image style={style.image} source={{ uri: image }}></Image>
+          <Image style={style.image} source={{ uri: image }}></Image>
         </Swiper>
       </View>
       <SafeAreaView>
@@ -71,7 +77,7 @@ const CenterScreen = ({ route }) => {
           onPress={() => {
             navigation.goBack();
           }}
-          style={styles.backButton}
+          style={style.backButton}
         >
           <Ionicons name="arrow-back" size={30} color="white"></Ionicons>
         </Pressable>
@@ -99,8 +105,14 @@ const CenterScreen = ({ route }) => {
           {},
         ]}
       >
-        <ScrollView>
-          <View style={[styles.dataWrapper]}>
+        <ScrollView
+          style={{
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            backgroundColor: theme.colors.BACKGROUND,
+          }}
+        >
+          <View style={[style.dataWrapper]}>
             <View
               onTouchStart={(e) => (this.touchY = e.nativeEvent.pageY)}
               onTouchEnd={(e) => {
@@ -117,56 +129,56 @@ const CenterScreen = ({ route }) => {
                 marginTop: 5,
               }}
             ></View>
-            <View style={styles.headerWrapper}>
-              <Image style={styles.logo} source={{ uri: logo }}></Image>
-              <View style={styles.titleWrapper}>
-                <CostumeText style={styles.title} fontWeight="Bold">
+            <View style={style.headerWrapper}>
+              <Image style={style.logo} source={{ uri: logo }}></Image>
+              <View style={style.titleWrapper}>
+                <CostumeText style={style.title} fontWeight="Bold">
                   {title}
                 </CostumeText>
               </View>
-              <Text style={styles.distance}>{distance} km</Text>
+              <Text style={style.distance}>{distance} km</Text>
             </View>
-            <View style={styles.divider} />
-            <View style={styles.iconsWrapper}>
-              <Pressable style={styles.icon}>
+            <View style={style.divider} />
+            <View style={style.iconsWrapper}>
+              <SocialMediaIcon>
                 <Ionicons
                   color={iconsColor}
                   size={iconsSize}
                   name="logo-instagram"
                 ></Ionicons>
-              </Pressable>
-              <Pressable style={styles.icon}>
+              </SocialMediaIcon>
+              <SocialMediaIcon>
                 <Icon
                   color={iconsColor}
                   size={iconsSize}
                   name="snapchat"
                 ></Icon>
-              </Pressable>
-              <Pressable style={styles.icon}>
+              </SocialMediaIcon>
+              <SocialMediaIcon>
                 <Ionicons
                   color={iconsColor}
                   size={iconsSize}
                   name="logo-whatsapp"
                 ></Ionicons>
-              </Pressable>
-              <Pressable style={styles.icon}>
+              </SocialMediaIcon>
+              <SocialMediaIcon>
                 <Feather
                   color={iconsColor}
                   size={iconsSize}
                   name="phone"
                 ></Feather>
-              </Pressable>
-              <Pressable style={styles.icon}>
+              </SocialMediaIcon>
+              <SocialMediaIcon>
                 <Feather
                   color={iconsColor}
                   size={iconsSize}
                   name="map-pin"
                 ></Feather>
-              </Pressable>
+              </SocialMediaIcon>
             </View>
-            <View style={styles.reservationWrapper}>
-              <View style={styles.dates}>
-                <View style={styles.datesHeader}>
+            <View style={style.reservationWrapper}>
+              <View style={style.dates}>
+                <View style={style.datesHeader}>
                   <Feather
                     name="calendar"
                     size={26}
@@ -176,6 +188,7 @@ const CenterScreen = ({ route }) => {
                     style={{
                       fontSize: 18,
                       paddingHorizontal: 10,
+                      color: theme.colors.TEXT,
                     }}
                   >
                     Date
@@ -183,8 +196,8 @@ const CenterScreen = ({ route }) => {
                 </View>
                 <Days />
               </View>
-              <View style={styles.dates}>
-                <View style={styles.datesHeader}>
+              <View style={style.dates}>
+                <View style={style.datesHeader}>
                   <Icon
                     name="timer-sand"
                     size={26}
@@ -194,6 +207,7 @@ const CenterScreen = ({ route }) => {
                     style={{
                       fontSize: 18,
                       paddingHorizontal: 10,
+                      color: theme.colors.TEXT,
                     }}
                   >
                     Duration
@@ -201,8 +215,8 @@ const CenterScreen = ({ route }) => {
                 </View>
                 <Durations />
               </View>
-              <View style={styles.dates}>
-                <View style={styles.datesHeader}>
+              <View style={style.dates}>
+                <View style={style.datesHeader}>
                   <Feather
                     name="clock"
                     size={26}
@@ -212,6 +226,7 @@ const CenterScreen = ({ route }) => {
                     style={{
                       fontSize: 18,
                       paddingHorizontal: 10,
+                      color: theme.colors.TEXT,
                     }}
                   >
                     Time
@@ -229,95 +244,98 @@ const CenterScreen = ({ route }) => {
 
 export default CenterScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+const styles = (theme) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
 
-  dataWrapper: {
-    backgroundColor: "white",
+    dataWrapper: {
+      backgroundColor: theme.colors.BACKGROUND,
 
-    alignItems: "center",
-    borderRadius: 16,
-  },
-  backButton: {
-    width: 50,
-    height: 50,
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 50,
-    backgroundColor: "rgb(1 160 139)",
-    top: 50,
-    start: 10,
-  },
-  dates: {
-    marginVertical: 4,
-  },
-  datesHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  image: {
-    height: Dimensions.get("screen").height * 0.4,
-    width: Dimensions.get("screen").width,
-  },
-  reservationWrapper: {
-    width: Dimensions.get("screen").width,
-    padding: 20,
-  },
-  iconsWrapper: {
-    width: Dimensions.get("screen").width * 0.8,
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
+      alignItems: "center",
+      borderRadius: 16,
+    },
+    backButton: {
+      width: 50,
+      height: 50,
+      position: "absolute",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 50,
+      backgroundColor: "rgb(1 160 139)",
+      top: 50,
+      start: 10,
+    },
+    dates: {
+      marginVertical: 4,
+    },
+    datesHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    image: {
+      height: Dimensions.get("screen").height * 0.4,
+      width: Dimensions.get("screen").width,
+    },
+    reservationWrapper: {
+      width: Dimensions.get("screen").width,
+      padding: 20,
+    },
+    iconsWrapper: {
+      width: Dimensions.get("screen").width * 0.8,
+      padding: 10,
+      flexDirection: "row",
+      alignItems: "center",
 
-    justifyContent: "space-between",
-  },
-  titleWrapper: {
-    width: "70%",
-  },
-  headerWrapper: {
-    width: Dimensions.get("screen").width,
-    height: 70,
-    paddingHorizontal: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    alignContent: "space-between",
-    backgroundColor: "white",
-    justifyContent: "start",
-  },
-  title: {
-    fontSize: 24,
-    paddingStart: 10,
-    width: "100%",
-    fontWeight: "bold",
-  },
-  logo: {
-    width: 50,
-    height: 50,
+      justifyContent: "space-between",
+    },
+    titleWrapper: {
+      width: "70%",
+    },
+    headerWrapper: {
+      width: Dimensions.get("screen").width,
+      height: 70,
+      paddingHorizontal: 15,
+      flexDirection: "row",
+      alignItems: "center",
+      borderRadius: 10,
+      alignContent: "space-between",
 
-    borderRadius: 50,
-  },
-  distance: {
-    fontSize: 18,
-  },
-  icon: {
-    width: 35,
-    height: 35,
-    borderRadius: 8,
-    borderColor: "rgb(10 114 100)",
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  divider: {
-    width: Dimensions.get("screen").width * 0.9,
-    margin: 15,
-    height: 1,
-    backgroundColor: "rgb(226 226 226)",
-    color: "gray",
-  },
-});
+      justifyContent: "start",
+    },
+    title: {
+      fontSize: 24,
+      paddingStart: 10,
+      width: "100%",
+      fontWeight: "bold",
+      color: theme.colors.TEXT,
+    },
+    logo: {
+      width: 50,
+      height: 50,
+
+      borderRadius: 50,
+    },
+    distance: {
+      fontSize: 18,
+      color: theme.colors.TEXT,
+    },
+    icon: {
+      width: 35,
+      height: 35,
+      borderRadius: 8,
+      borderColor: "rgb(10 114 100)",
+      borderWidth: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      alignSelf: "center",
+    },
+    divider: {
+      width: Dimensions.get("screen").width * 0.9,
+      margin: 15,
+      height: 1,
+      backgroundColor: "rgb(226 226 226)",
+      color: "gray",
+    },
+  });

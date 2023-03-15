@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width * 0.85,
     borderRadius: 14,
     height: 220,
-
+    backgroundColor: "white",
     margin: 10,
     shadowOffset: { height: 5 },
     shadowColor: "#171717",
