@@ -3,7 +3,7 @@ import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import DayCard from "./DayCard";
 
-const Days = () => {
+const Days = (props) => {
   var days = [];
   let date = new Date();
 
@@ -14,9 +14,18 @@ const Days = () => {
     var day = formatDate.split("/")[0];
     var month = formatDate.split("/")[1];
     days.push(
-      <DayCard key={i} month={month} day={day} dayNum={dayNum}></DayCard>
+      <DayCard
+        value={props.value}
+        setValue={props.setValue}
+        date={formatDate}
+        key={i}
+        month={month}
+        day={day}
+        dayNum={dayNum}
+      ></DayCard>
     );
   }
+
   return (
     <ScrollView horizontal={true} style={styles.container}>
       {days}

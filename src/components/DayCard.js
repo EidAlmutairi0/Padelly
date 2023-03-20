@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import useTheme from "../Themes/useTheme";
 import useThemedStyles from "../Themes/useThemedStyles";
@@ -7,18 +7,22 @@ import CostumeText from "./CostumeText";
 const DayCard = (props) => {
   const theme = useTheme();
   const style = useThemedStyles(styles);
-  const [selected, setSelected] = useState(false);
+  const selected = props.date === props.value.date;
   return (
     <Pressable
       onPress={() => {
-        setSelected(!selected);
+        if (!selected) {
+          props.setValue({ ...props.value, date: props.date });
+        } else {
+          props.setValue({ ...props.value, date: "" });
+        }
       }}
       style={[style.container, selected && style.selected]}
     >
       <CostumeText
         style={
           theme.isLightTheme
-            ? selected && style.selected
+            ? selected && [style.selected, { color: "white" }]
             : {
                 color: theme.colors.TEXT,
               }
@@ -29,7 +33,7 @@ const DayCard = (props) => {
       <CostumeText
         style={
           theme.isLightTheme
-            ? selected && style.selected
+            ? selected && [style.selected, { color: "white" }]
             : {
                 color: theme.colors.TEXT,
               }
@@ -40,7 +44,7 @@ const DayCard = (props) => {
       <CostumeText
         style={
           theme.isLightTheme
-            ? selected && style.selected
+            ? selected && [style.selected, { color: "white" }]
             : {
                 color: theme.colors.TEXT,
               }

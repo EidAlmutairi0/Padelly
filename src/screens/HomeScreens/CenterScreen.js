@@ -17,6 +17,7 @@ import Swiper from "react-native-swiper";
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import CostumeText from "../../components/CostumeText";
 import Days from "../../components/Days";
@@ -27,7 +28,7 @@ import useThemedStyles from "../../Themes/useThemedStyles";
 const CenterScreen = ({ route }) => {
   const iconsColor = "rgb(10 114 100)";
   const iconsSize = 20;
-  const { title, image, logo, distance } = route.params;
+  const { title, image, logo, distance, images } = route.params;
   const [isSwiper, setIsSwiper] = useState(true);
   const [screenSize, setScreenSize] = useState(
     new Animated.Value(Dimensions.get("screen").height * 0.53)
@@ -37,6 +38,19 @@ const CenterScreen = ({ route }) => {
   const MIN_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.53;
   const MAX_CONTENT_HEIGHT = Dimensions.get("screen").height * 0.75;
   const [scrollEnabled, setScrollEnabled] = useState(false);
+
+  const [reservation, setReservation] = useState({
+    date: "",
+    duration: "",
+    time: "",
+  });
+
+  const isEmpty = Object.values(reservation).some((value) => {
+    if (value === "") {
+      return true;
+    }
+    return false;
+  });
 
   const handleSwipeDown = () => {
     Animated.spring(screenSize, {
@@ -69,7 +83,16 @@ const CenterScreen = ({ route }) => {
       >
         <Swiper scrollEnabled={isSwiper}>
           <Image style={style.image} source={{ uri: image }}></Image>
-          <Image style={style.image} source={{ uri: image }}></Image>
+          {images &&
+            images.map((image) => {
+              return (
+                <Image
+                  key={image}
+                  style={style.image}
+                  source={{ uri: image }}
+                ></Image>
+              );
+            })}
         </Swiper>
       </View>
       <SafeAreaView>
@@ -194,7 +217,7 @@ const CenterScreen = ({ route }) => {
                     Date
                   </CostumeText>
                 </View>
-                <Days />
+                <Days value={reservation} setValue={setReservation} />
               </View>
               <View style={style.dates}>
                 <View style={style.datesHeader}>
@@ -213,7 +236,7 @@ const CenterScreen = ({ route }) => {
                     Duration
                   </CostumeText>
                 </View>
-                <Durations />
+                <Durations value={reservation} setValue={setReservation} />
               </View>
               <View style={style.dates}>
                 <View style={style.datesHeader}>
@@ -232,8 +255,29 @@ const CenterScreen = ({ route }) => {
                     Time
                   </CostumeText>
                 </View>
-                <Hours />
+                <Hours value={reservation} setValue={setReservation} />
               </View>
+              <TouchableOpacity
+                disabled={isEmpty}
+                style={[
+                  style.button,
+                  isEmpty
+                    ? {
+                        backgroundColor: "gray",
+                      }
+                    : { backgroundColor: theme.colors.PRIMARY },
+                ]}
+              >
+                <CostumeText
+                  style={{
+                    fontSize: 18,
+
+                    color: "white",
+                  }}
+                >
+                  Conform
+                </CostumeText>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
@@ -337,5 +381,14 @@ const styles = (theme) =>
       height: 1,
       backgroundColor: "rgb(226 226 226)",
       color: "gray",
+    },
+    button: {
+      width: "90%",
+      height: 50,
+
+      borderRadius: 6,
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
     },
   });

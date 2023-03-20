@@ -31,7 +31,7 @@
     "react-native-svg": "13.4.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^9.2.0",
-    "square_tabbar": "^1.0.12"
+    "rn-square-tabbar": "^1.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -8,14 +8,19 @@ const HourCard = (props) => {
   const [isSelected, setIsSelected] = useState(false);
   const theme = useTheme();
   const style = useThemedStyles(styles);
+  const selected = props.value === props.hour + " " + props.noon;
   return (
     <Pressable
       onPress={() => {
-        setIsSelected(!isSelected);
+        if (!selected) {
+          props.onPress(props.hour + " " + props.noon);
+        } else {
+          props.onPress("");
+        }
       }}
       style={[
         style.container,
-        isSelected && style.selected,
+        selected && style.selected,
         props.disabled && style.disabled,
       ]}
       disabled={props.disabled}
@@ -23,7 +28,7 @@ const HourCard = (props) => {
       <CostumeText
         style={[
           theme.isLightTheme
-            ? isSelected && style.selected
+            ? selected && style.selected
             : {
                 color: "white",
               },
@@ -35,7 +40,7 @@ const HourCard = (props) => {
       <CostumeText
         style={[
           theme.isLightTheme
-            ? isSelected && style.selected
+            ? selected && style.selected
             : {
                 color: "white",
               },
@@ -70,7 +75,7 @@ const styles = (theme) =>
     },
     disabled: {
       borderColor: "rgb(175 175 175)",
-      backgroundColor: "white",
+
       color: "rgb(175 175 175)",
     },
   });

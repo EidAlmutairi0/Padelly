@@ -3,7 +3,10 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 import HourCard from "./HourCard";
-const Hours = () => {
+const Hours = (props) => {
+  const onPress = (duration) => {
+    props.setValue({ ...props.value, time: duration });
+  };
   var today = new Date();
 
   var myToday = new Date(
@@ -40,6 +43,8 @@ const Hours = () => {
       renderItem={(item) => {
         return (
           <HourCard
+            value={props.value.time}
+            onPress={onPress}
             key={item.index}
             hour={item.item.hour}
             noon={item.item.noon}

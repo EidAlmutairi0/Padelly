@@ -5,7 +5,7 @@ import { typography } from "./styles/typography";
 export const ThemeContext = React.createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [isLightTheme, setLightTheme] = useState(false);
+  const [isLightTheme, setLightTheme] = useState(true);
   const toggleTheme = () => setLightTheme((previousState) => !previousState);
 
   const theme = {

@@ -13,6 +13,7 @@ const Center = (props) => {
           image: props.image,
           logo: props.logo,
           distance: props.distance,
+          images: props.images,
         });
       }}
     >

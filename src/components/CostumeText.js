@@ -1,8 +1,11 @@
 import { useFonts } from "expo-font";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import useTheme from "../Themes/useTheme";
 
 const CostumeText = (props) => {
+  const theme = useTheme();
+
   const [fontsLoaded] = useFonts({
     IBMPlexSansBold: require("../../assets/fonts/IBMPlexSans-Bold.ttf"),
     IBMPlexSansThin: require("../../assets/fonts/IBMPlexSans-Thin.ttf"),
